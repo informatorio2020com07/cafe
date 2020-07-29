@@ -5,7 +5,7 @@ class Cafetera:
         self.__cant = cant
         self.__marca = marca
         self.__modelo = modelo
-        self.nombre_id = nombre_id
+        self.__nombre_id = nombre_id
 
 
     def get_capacidad(self):
