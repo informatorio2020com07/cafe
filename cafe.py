@@ -16,10 +16,12 @@ class Cafetera:
 
 
 class Cafeteria:
-    pass
+    def __init__(self, nombre):
+			self.__lista_cafeteras = []
+			self.__nombre = nombre
 
     def get_cantidad_cafeteras(self):
-        return len(self.lista_cafeteras)
+        return len(self.__lista_cafeteras)
 
 
 if __name__ == "__main__":
