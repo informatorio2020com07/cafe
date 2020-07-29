@@ -11,6 +11,9 @@ class Cafetera:
     def get_capacidad(self):
     	return self.__capacidad
 
+    def get_contenido(self):
+        return self.__cant
+
 
 class Cafeteria:
     pass
