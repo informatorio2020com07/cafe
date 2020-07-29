@@ -1,5 +1,6 @@
 class Cafetera:
-    pass
+    def get_capacidad(self):
+    	return self.__capacidad
 
 class Cafeteria:
     pass
