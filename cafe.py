@@ -15,5 +15,9 @@ class Cafetera:
 class Cafeteria:
     pass
 
+    def get_cantidad_cafeteras(self):
+        return len(self.lista_cafeteras)
+
+
 if __name__ == "__main__":
     pass
