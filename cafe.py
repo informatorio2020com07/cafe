@@ -14,6 +14,15 @@ class Cafetera:
     def get_contenido(self):
         return self.__cant
 
+    def llenar_cafetera(self):
+        self.__cant = self.__capacidad
+
+    def recargar(self, cantidad):
+    #metodo para recargar una cafetera, recibe la cantidad a recargar. Si se pasa dev. un error.
+        if self.__cant + cantidad <= self.__capacidad:
+            self.__cant += cantidad
+        else:
+            raise ValueError("No hay suficiente capacidad para recargar esa cantidad")      
 
 class Cafeteria:
     def __init__(self, nombre):
