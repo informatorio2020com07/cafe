@@ -14,6 +14,17 @@ class Cafetera:
     def get_contenido(self):
         return self.__cant
 
+    def get_admisible(self):
+        #Retorna cuanto le falta a una cafetera para alcanzar su capacidad.
+        return self.__capacidad - self.__cant  
+    
+    def esta_vacia(self):
+        #Retorna True si la cafetera no tiene cafe, caso contrario retorna False
+        if self.__capacidad == self.get_admisible():
+            return True
+        else:
+            return False
+
     def llenar_cafetera(self):
         self.__cant = self.__capacidad
 
