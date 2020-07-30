@@ -40,7 +40,10 @@ class Cafetera:
         if self.__cant + cantidad <= self.__capacidad:
             self.__cant += cantidad
         else:
-            raise ValueError("No hay suficiente capacidad para recargar esa cantidad")      
+            raise ValueError("No hay suficiente capacidad para recargar esa cantidad")
+
+    def vaciar_cafetera(self):
+        self.__cant=0   
 
 class Cafeteria:
     def __init__(self, nombre):
