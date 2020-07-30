@@ -45,6 +45,10 @@ class Cafetera:
     def vaciar_cafetera(self):
         self.__cant=0   
 
+    def str_cant_sobre_capacidad(self):
+        cadena = str(self.__cant) + "/" + str(self.__capacidad)
+        return cadena
+
 class Cafeteria:
     def __init__(self, nombre):
 			self.__lista_cafeteras = []
