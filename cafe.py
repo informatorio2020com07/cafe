@@ -25,6 +25,13 @@ class Cafetera:
         else:
             return False
 
+    def esta_llena(self):
+        #Si el elemento cafetera esta llena cap=cant devuelve true, sino devuelve false
+        if self.__capacidad == self.__cant:
+            return True
+        else:
+            return False            
+
     def llenar_cafetera(self):
         self.__cant = self.__capacidad
 
