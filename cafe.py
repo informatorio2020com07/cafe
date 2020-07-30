@@ -8,6 +8,10 @@ class Cafetera:
         self.__nombre_id = nombre_id
 
 
+    def get_nombre(self):
+        return self.__nombre_id
+
+
     def get_capacidad(self):
     	return self.__capacidad
 
@@ -51,12 +55,52 @@ class Cafetera:
 
 class Cafeteria:
     def __init__(self, nombre):
-			self.__lista_cafeteras = []
-			self.__nombre = nombre
+        self.__lista_cafeteras = []
+        self.__nombre = nombre
 
     def get_cantidad_cafeteras(self):
         return len(self.__lista_cafeteras)
 
 
+    def buscar_cafetera_por_nombre(self, nombre):
+        """
+        Busca una cafetera dentro de la lista cafetera.
+        args:
+            nombre = nombre de la cafetera a bucar
+        return:
+            Un objeto cafetera
+        """
+        for item in self.__lista_cafeteras:
+            if item.get_nombre() == nombre:
+                return item
+        return False
+
+
+    def agregar_cafetera(self, cafetera:Cafetera):
+        """
+        Agrega una nueva cafetera a Cafeteria y la agrega
+        a la lista lista_cafeteras
+        arg:
+            cafetera: Una clase cafetera para ser agregada
+        return:
+            True o False        
+        """
+        if isinstance(cafetera,Cafetera):
+            if not self.buscar_cafetera_por_nombre(cafetera.get_nombre()):  #Si no encuentra la cafetera
+                self.__lista_cafeteras.append(cafetera)                         #la agrega
+                return True
+            else:
+                raise ValueError("La cafetera con ese nombre ya ha sido agregada")
+                return False
+        else:      #No es un objeto cafetera
+            raise ValueError("No es una cafetera válida. Agregue una cafetera")
+            return False
+
+
+
+
+
 if __name__ == "__main__":
     pass
+
+    
