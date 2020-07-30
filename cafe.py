@@ -42,6 +42,10 @@ class Cafetera:
         else:
             raise ValueError("No hay suficiente capacidad para recargar esa cantidad")      
 
+    def str_cant_sobre_capacidad(self):
+        cadena = str(self.__cant) + "/" + str(self.__capacidad)
+        return cadena
+
 class Cafeteria:
     def __init__(self, nombre):
 			self.__lista_cafeteras = []
