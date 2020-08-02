@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class Cafetera:
 
     def __init__(self, capacidad, cant, marca, modelo, nombre_id):
@@ -74,8 +75,7 @@ class Cafeteria:
             if item.get_nombre() == nombre:
                 return item
         return False
-
-
+  
     def agregar_cafetera(self, cafetera:Cafetera):
         """
         Agrega una nueva cafetera a Cafeteria y la agrega
@@ -104,3 +104,4 @@ if __name__ == "__main__":
     pass
 
     
+
