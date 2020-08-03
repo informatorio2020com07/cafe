@@ -39,11 +39,16 @@ class Cafetera:
 
     def recargar(self, cantidad):
         # metodo para recargar una cafetera, recibe la cantidad a recargar. Si se pasa dev. un error.
-        if self.__cant + cantidad <= self.__capacidad:
-            self.__cant += cantidad
+        if self.__numero_recargas == 10     #si se llega al limite mostrar el error.
+            self.__defectuosa = False       #si llega a 10 recargas la cafetera queda defectuosa
+            raise Exception("Cafetera defectuosa, necesita mantenimiento")
         else:
-            raise ValueError(
-                "No hay suficiente capacidad para recargar esa cantidad")
+            if self.__cant + cantidad <= self.__capacidad:
+                self.__cant += cantidad
+                self.__numero_recargas += 1     #sumamos 1 al numero de recargas de limite 10
+            else:
+                raise ValueError(
+                    "No hay suficiente capacidad para recargar esa cantidad")
 
     def cuantas_tazas(self, capacidad_taza=200):
         # calcula la cantidad de tazas que se pueden servir con una cafetera. Recibe
