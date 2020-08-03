@@ -40,7 +40,7 @@ class Cafetera:
     def recargar(self, cantidad):
         # metodo para recargar una cafetera, recibe la cantidad a recargar. Si se pasa dev. un error.
         if self.__numero_recargas == 10     #si se llega al limite mostrar el error.
-            self.__defectuosa = False
+            self.__defectuosa = False       #si llega a 10 recargas la cafetera queda defectuosa
             raise Exception("Cafetera defectuosa, necesita mantenimiento")
         else:
             if self.__cant + cantidad <= self.__capacidad:
