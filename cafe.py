@@ -91,8 +91,8 @@ class Cafetera:
         }
         return data
 
-    def datos_cafetera(self):
-        """Lo mismo que to_dict(), solo que respeta el nombre establecido en las tareas."""
+    def get_datos(self):
+        """Lo mismo que to_dict(), solo que respeta el nombre establecido en las especificaciones."""
         return self.to_dict()
 
 
