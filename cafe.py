@@ -137,7 +137,12 @@ class Cafeteria:
                 return False  # FIXME remover el return, no es necesario, dado que el error impide que se ejecute.
         else:  # No es un objeto cafetera
             raise ValueError("No es una cafetera válida. Agregue una cafetera")
-            return False  #FIXME rEl return no es necesario, porque el error no permite que se alcance esa instrucción.
+
+
+
+        
+
+
 
 
 if __name__ == "__main__":
