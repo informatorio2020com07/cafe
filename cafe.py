@@ -95,12 +95,12 @@ class Cafetera:
         """Lo mismo que to_dict(), solo que respeta el nombre establecido en las especificaciones."""
         return self.to_dict()
 
-    def set cafetera(self,capacidad, cant, marca, modelo, nombre_id):
-        self.__capacidad = capacidad
-        self.__cant = cant
-        self.__marca = marca
-        self.__modelo = modelo
-        self.__nombre_id = nombre_id
+    def set cafetera(self,nueva_capacidad, nueva_cant, nueva_marca, nuevo_modelo, nuevo_nombre_id):
+        self.__capacidad = nueva_capacidad
+        self.__cant = nueva_cant
+        self.__marca = nueva_marca
+        self.__modelo = nuevo_modelo
+        self.__nombre_id = nuevo_nombre_id
 
 
 
