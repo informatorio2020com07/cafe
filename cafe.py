@@ -46,6 +46,11 @@ class Cafetera:
         else:
             raise ValueError("No hay suficiente capacidad para recargar esa cantidad")
 
+    def cuantas_tazas (self, capacidad_taza = 200):
+        #calcula la cantidad de tazas que se pueden servir con una cafetera. Recibe
+        #el tamaño de la taza
+        return self.__cant//capacidad_taza
+        
     def vaciar_cafetera(self):
         self.__cant=0
 
