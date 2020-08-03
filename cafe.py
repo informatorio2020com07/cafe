@@ -77,6 +77,9 @@ class Cafetera:
     def get_marca(self):
         return self.__marca
 
+    def get_modelo(self):
+        return self.__modelo
+
 
 class Cafeteria:
     def __init__(self, nombre):
@@ -116,12 +119,10 @@ class Cafeteria:
             else:
                 raise ValueError(
                     "La cafetera con ese nombre ya ha sido agregada")
-                return False
+                return False  #FIXME remover el return, no es necesario, dado que 
         else:  # No es un objeto cafetera
             raise ValueError("No es una cafetera válida. Agregue una cafetera")
             return False
-
-
 
 
 if __name__ == "__main__":
