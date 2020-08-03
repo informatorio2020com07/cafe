@@ -95,6 +95,11 @@ class Cafetera:
         """Lo mismo que to_dict(), solo que respeta el nombre establecido en las especificaciones."""
         return self.to_dict()
 
+    def set cafetera(self,nuevo_nombre):
+        self.nombre=nuevo_nombre
+        
+
+
 
 class Cafeteria:
     def __init__(self, nombre):
