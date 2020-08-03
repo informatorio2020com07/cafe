@@ -80,6 +80,21 @@ class Cafetera:
     def get_modelo(self):
         return self.__modelo
 
+    def to_dict(self):
+        """Devuelve los datos de la cafetera en forma de diccionario."""
+        data = {
+            "nombre_id": self.get_nombre(),
+            "capacidad": self.get_capacidad(),
+            "contenido": self.get_contenido(),
+            "marca": self.get_marca(),
+            "modelo": self.get_modelo(),
+        }
+        return data
+
+    def datos_cafetera(self):
+        """Lo mismo que to_dict(), solo que respeta el nombre establecido en las tareas."""
+        return self.to_dict()
+
 
 class Cafeteria:
     def __init__(self, nombre):
@@ -119,10 +134,10 @@ class Cafeteria:
             else:
                 raise ValueError(
                     "La cafetera con ese nombre ya ha sido agregada")
-                return False  #FIXME remover el return, no es necesario, dado que 
+                return False  # FIXME remover el return, no es necesario, dado que el error impide que se ejecute.
         else:  # No es un objeto cafetera
             raise ValueError("No es una cafetera válida. Agregue una cafetera")
-            return False
+            return False  #FIXME rEl return no es necesario, porque el error no permite que se alcance esa instrucción.
 
 
 if __name__ == "__main__":
