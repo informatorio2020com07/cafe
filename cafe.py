@@ -47,7 +47,24 @@ class Cafetera:
             raise ValueError("No hay suficiente capacidad para recargar esa cantidad")
 
     def vaciar_cafetera(self):
-        self.__cant=0   
+        self.__cant=0
+
+    def servir(self, cantidad):
+		"""Metodo para servir cafe
+		Sirve cafe y lo descuenta de cantidad actual de cafe
+		
+		args
+		  cantidad (int): cantidad de café a servir.
+
+		returns
+
+		raises
+			ValueError si no hay suficiente cafe
+		"""
+		if self.__cant >= cantidad:
+			self.__cant = self.__cant - cantidad
+		else:
+			raise ValueError("No hay suficiente cafe")
 
     def str_cant_sobre_capacidad(self):
         cadena = str(self.__cant) + "/" + str(self.__capacidad)
@@ -61,7 +78,6 @@ class Cafeteria:
     def get_cantidad_cafeteras(self):
         return len(self.__lista_cafeteras)
 
-
     def buscar_cafetera_por_nombre(self, nombre):
         """
         Busca una cafetera dentro de la lista cafetera.
@@ -74,8 +90,7 @@ class Cafeteria:
             if item.get_nombre() == nombre:
                 return item
         return False
-
-
+  
     def agregar_cafetera(self, cafetera:Cafetera):
         """
         Agrega una nueva cafetera a Cafeteria y la agrega
@@ -104,3 +119,4 @@ if __name__ == "__main__":
     pass
 
     
+
