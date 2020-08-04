@@ -1,11 +1,12 @@
 class Cafetera:
 
-    def __init__(self, capacidad, cant, marca, modelo, nombre_id):
+    def __init__(self, capacidad, cant, marca, modelo, nombre_id, funcionando):
         self.__capacidad = capacidad
         self.__cant = cant
         self.__marca = marca
         self.__modelo = modelo
         self.__nombre_id = nombre_id
+        self.__funcionando = funcionando
 
     def get_nombre(self):
         return self.__nombre_id
