@@ -1,11 +1,18 @@
 class Cafetera:
 
-    def __init__(self, capacidad, cant, marca, modelo, nombre_id):
+    def __init__(self, capacidad, cant, marca, modelo, nombre_id, funcionando):
         self.__capacidad = capacidad
         self.__cant = cant
         self.__marca = marca
         self.__modelo = modelo
         self.__nombre_id = nombre_id
+        self.__funcionando = funcionando
+
+    def get_estado(self):
+        if self.funcionando=="funcionando":
+            return True
+        else:
+            return False
 
     def get_nombre(self):
         return self.__nombre_id
@@ -70,10 +77,11 @@ class Cafetera:
         raises
                 ValueError si no hay suficiente cafe
         """
-        if self.__cant >= cantidad:
+        if self.__cant >= cantidad and get_estado():
             self.__cant = self.__cant - cantidad
         else:
-            raise ValueError("No hay suficiente cafe")
+            raise ValueError("En este momento no se puede servir cafe")
+            
 
     def str_cant_sobre_capacidad(self):
         cadena = str(self.__cant) + "/" + str(self.__capacidad)
