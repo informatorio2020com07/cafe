@@ -144,6 +144,17 @@ class Cafeteria:
             raise ValueError("No es una cafetera válida. Agregue una cafetera")
             return False  #FIXME rEl return no es necesario, porque el error no permite que se alcance esa instrucción.
 
+    def quitar_cafetera_nombre(self, nombrecaf):
+        cafetera_borrada = False
+        for cafet in self.__cafeteras:
+            if cafet.get_nombre() == nombrecaf:
+                self.__cafeteras.remove(cafet)
+                cafetera_borrada = True
+        if cafetera_borrada:
+            print("Se quito la cafetera : {}".format(cafet.get_nombre()))
+        else:
+            print("No se encontró la cafetera {} en la lista.".format(nombrecaf))
+
 
 if __name__ == "__main__":
     pass
