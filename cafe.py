@@ -8,6 +8,12 @@ class Cafetera:
         self.__nombre_id = nombre_id
         self.__funcionando = funcionando
 
+    def get_estado(self):
+        if self.funcionando=="funcionando":
+            return True
+        else:
+            return False
+
     def get_nombre(self):
         return self.__nombre_id
 
