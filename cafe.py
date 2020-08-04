@@ -39,8 +39,8 @@ class Cafetera:
 
     def recargar(self, cantidad):
         # metodo para recargar una cafetera, recibe la cantidad a recargar. Si se pasa dev. un error.
-        if self.__numero_recargas == 10     #si se llega al limite mostrar el error.
-            self.__defectuosa = False       #si llega a 10 recargas la cafetera queda defectuosa
+        if self.__numero_recargas == 10:     #si se llega al limite mostrar el error.
+            self.__defectuosa = True         #si llega a 10 recargas la cafetera queda defectuosa
             raise Exception("Cafetera defectuosa, necesita mantenimiento")
         else:
             if self.__cant + cantidad <= self.__capacidad:
@@ -148,6 +148,17 @@ class Cafeteria:
         
 
 
+
+    def quitar_cafetera_nombre(self, nombrecaf):
+        cafetera_borrada = False
+        for cafet in self.__cafeteras:
+            if cafet.get_nombre() == nombrecaf:
+                self.__cafeteras.remove(cafet)
+                cafetera_borrada = True
+        if cafetera_borrada:
+            print("Se quito la cafetera : {}".format(cafet.get_nombre()))
+        else:
+            print("No se encontró la cafetera {} en la lista.".format(nombrecaf))
 
 
 if __name__ == "__main__":
