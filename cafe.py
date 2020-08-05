@@ -1,6 +1,6 @@
 class Cafetera:
     
-    def __init__(self, capacidad, cant, marca, modelo, nombre_id, funcionando,tipo_de_cafe):
+    def __init__(self, nombre_id,marca,modelo,tipo_de_cafe,capacidad=0, cant=0,funcionando="funcionando"):
         """crea el objeto de la clase cafetera"""
         self.__capacidad = capacidad
         self.__cant = cant
@@ -37,6 +37,22 @@ class Cafetera:
         """Retorna cuanto le falta a una cafetera para alcanzar su capacidad."""
         return self.get_capacidad() - self.get_contenido()
 
+    def get_marca(self):
+        """devuelve la marca"""
+        return self.__marca
+
+    def get_modelo(self):
+        """devuelve el modelo"""
+        return self.__modelo
+
+    def set_contenido(self,cantidad):
+            """cambia el contenido de capacidad"""
+            self.__cant=cantidad
+
+    def set_capacidad(self,capacidad):
+            """cambia el contenido de capacidad"""
+            self.__capacidad=capacidad        
+
     def esta_llena(self):
         # Si el elemento cafetera esta llena cap=cant devuelve true, sino devuelve false
         if self.get_capacidad() == self.get_contenido():
@@ -46,14 +62,14 @@ class Cafetera:
                 
     def llenar_cafetera(self):
         """llena la cafetera"""
-        self.get_contenido() = self.get_capacidad()
+        self.set_contenido(self.get_capacidad())
 
     
     def recargar(self, cantidad):
         """metodo para recargar una cafetera, recibe la cantidad a recargar. Si se pasa dev. un error."""
         if self.get_estado():
             if cantidad <= get_admisible():
-                self.get_contenido() += cantidad
+                self.set_contenido(self.get_contenido()+cantidad)
             else:
                 raise ValueError(
                     "No hay suficiente capacidad para recargar esa cantidad")    
@@ -68,7 +84,7 @@ class Cafetera:
 
     """vacia la cafetera"""
     def vaciar_cafetera(self):
-        self.get_contenido() = 0
+        self.set_contenido(0)
         
     def esta_vacia(self):
         """Retorna True si la cafetera no tiene cafe, caso contrario retorna False"""
@@ -90,7 +106,7 @@ class Cafetera:
                 ValueError si no hay suficiente cafe
         """
         if self.get_contenido() >= cantidad and get_estado():
-            self.get_contenido() = self.get_contenido() - cantidad
+            self.set_contenido(self.get_contenido() - cantidad)
         else:
             raise ValueError("En este momento no se puede servir cafe")
             
@@ -98,12 +114,6 @@ class Cafetera:
     def str_cant_sobre_capacidad(self):
         cadena = str(self.get_contenido()) + "/" + str(self.get_capacidad())
         return cadena
-
-    def get_marca(self):
-        return self.__marca
-
-    def get_modelo(self):
-        return self.__modelo
 
     def to_dict(self):
         """Devuelve los datos de la cafetera en forma de diccionario."""
@@ -113,6 +123,7 @@ class Cafetera:
             "contenido": self.get_contenido(),
             "marca": self.get_marca(),
             "modelo": self.get_modelo(),
+            "tipoCafe":self.get_tipo_de_cafe()
         }
         return data
 
@@ -187,4 +198,16 @@ class Cafeteria:
 
 
 if __name__ == "__main__":
-    pass
+    cafetera1 = Cafetera(nombre_id="xcv45",marca="olivetti",modelo=2016,tipo_de_cafe="Arabica",capacidad=2500, cant=1500,funcionando="funcionando")
+
+    cafetera2 = Cafetera(nombre_id="xcv44",marca="Oster",modelo=2017,tipo_de_cafe="Robusto",capacidad=2500, cant=1800,funcionando="funcionando")
+
+    cafetera3 = Cafetera(nombre_id="xcv46",marca="olivetti",modelo=2016,tipo_de_cafe="Arabica",capacidad=0, cant=0,funcionando="funcionando")
+
+    cafeteria = Cafeteria("cafeteria00")
+
+    print("a")
+    cafeteria.agregar_cafetera(cafetera1)
+    print(cafeteria.get_lista_cafetera()[0].get_nombre())
+    cafeteria.agregar_cafetera(cafetera2)
+    print(cafeteria.get_lista_cafetera()[1].get_nombre())
