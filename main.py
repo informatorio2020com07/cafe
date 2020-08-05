@@ -1,8 +1,4 @@
 import cafe
-import mysql.connector
-def BaseDato():
-        conexion1=mysql.connector.connect(host="127.0.0.1",user="root",password="root",database="cafeteria",auth_plugin="mysql_native_password")
-        basedato=conexion1.cursor()
 import sys
 import os
 
@@ -90,6 +86,7 @@ def main():
     pass
 	#cafeteria = iniciar_cafeteria() #¿?no he visto la función aún
 	menu_principal()
+
 
 if __name__ == "__main__":
     main()
