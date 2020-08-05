@@ -73,7 +73,7 @@ def menu_principal():
 		"7" : salir }
 	while True:
 		menu_pantalla(menuPrincipal_opciones)
-		opcion = input("Escribe una opción: ")
+		opcion = input("elige una opción: ")
 		accion = opciones.get(opcion)
 		if accion:
 			accion()
