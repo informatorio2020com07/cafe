@@ -1,38 +1,35 @@
 class Cafetera:
-
-    def __init__(self, capacidad, cant, marca, modelo, nombre_id, funcionando):
+    """crea el objeto de la clase cafetera"""
+    def __init__(self, capacidad, cant, marca, modelo, nombre_id, funcionando,tipo_de_cafe):
         self.__capacidad = capacidad
         self.__cant = cant
         self.__marca = marca
         self.__modelo = modelo
         self.__nombre_id = nombre_id
         self.__funcionando = funcionando
-
+        self.__tipo_de_cafe = tipo_de_cafe
+    """devuelve el estado"""
     def get_estado(self):
-        if self.funcionando=="funcionando":
+        if self.__funcionando=="funcionando":
             return True
         else:
             return False
-
+    """devuelve el nombre de la cafetera"""        
     def get_nombre(self):
         return self.__nombre_id
-
+    """devuelve la capacidad de la cafetera"""    
     def get_capacidad(self):
         return self.__capacidad
-
+    """devuelve el contenido de la cafetera"""    
     def get_contenido(self):
         return self.__cant
-
+    """devuelve el tipo de cafe que tiene la cafetera"""    
+    def get_tipo_de_cafe():
+        return self.__tipo_de_cafe      
+    """cuanto deja recargar la cafetera"""    
     def get_admisible(self):
         # Retorna cuanto le falta a una cafetera para alcanzar su capacidad.
         return self.__capacidad - self.__cant
-
-    def esta_vacia(self):
-        # Retorna True si la cafetera no tiene cafe, caso contrario retorna False
-        if self.__capacidad == self.get_admisible():
-            return True
-        else:
-            return False
 
     def esta_llena(self):
         # Si el elemento cafetera esta llena cap=cant devuelve true, sino devuelve false
@@ -40,30 +37,37 @@ class Cafetera:
             return True
         else:
             return False
-
+    """llena la cafetera"""            
     def llenar_cafetera(self):
         self.__cant = self.__capacidad
 
+    """recarga la cantidad por CC"""    
     def recargar(self, cantidad):
         # metodo para recargar una cafetera, recibe la cantidad a recargar. Si se pasa dev. un error.
-        if self.__numero_recargas == 10:     #si se llega al limite mostrar el error.
-            self.__defectuosa = True         #si llega a 10 recargas la cafetera queda defectuosa
-            raise Exception("Cafetera defectuosa, necesita mantenimiento")
-        else:
-            if self.__cant + cantidad <= self.__capacidad:
+        if self.get_estado():
+            if cantidad <= get_admisible():
                 self.__cant += cantidad
-                self.__numero_recargas += 1     #sumamos 1 al numero de recargas de limite 10
             else:
                 raise ValueError(
-                    "No hay suficiente capacidad para recargar esa cantidad")
-
+                    "No hay suficiente capacidad para recargar esa cantidad")    
+        else:
+            raise Exception("Cafetera defectuosa, necesita mantenimiento")
+            
+    """devuelve cuantas tazas podes servir con lo que tiene la cafetera"""        
     def cuantas_tazas(self, capacidad_taza=200):
         # calcula la cantidad de tazas que se pueden servir con una cafetera. Recibe
         # el tamaño de la taza
         return self.__cant//capacidad_taza
-
+    """vacia la cafetera"""
     def vaciar_cafetera(self):
         self.__cant = 0
+    """"""    
+    def esta_vacia(self):
+        # Retorna True si la cafetera no tiene cafe, caso contrario retorna False
+        if self.__capacidad == self.get_admisible():
+            return True
+        else:
+            return False    
 
     def servir(self, cantidad):
         """Metodo para servir cafe

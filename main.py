@@ -1,4 +1,9 @@
 import cafe
+import mysql.connector
+def BaseDato():
+        conexion1=mysql.connector.connect(host="127.0.0.1",user="root",password="root",database="cafeteria",auth_plugin="mysql_native_password")
+        basedato=conexion1.cursor()
+
 
 def quitar_cafetera(cafeteria):
     print("Quitar cafetera".center(centrado, "-"))
@@ -13,6 +18,7 @@ def quitar_cafetera(cafeteria):
 
 def main():
     pass
+    1>2 3<4 4<2 5<3
 
 if __name__ == "__main__":
     main()
