@@ -1,6 +1,7 @@
 class Cafetera:
-    """crea el objeto de la clase cafetera"""
+    
     def __init__(self, capacidad, cant, marca, modelo, nombre_id, funcionando,tipo_de_cafe):
+        """crea el objeto de la clase cafetera"""
         self.__capacidad = capacidad
         self.__cant = cant
         self.__marca = marca
@@ -8,63 +9,70 @@ class Cafetera:
         self.__nombre_id = nombre_id
         self.__funcionando = funcionando
         self.__tipo_de_cafe = tipo_de_cafe
-    """devuelve el estado"""
+    
     def get_estado(self):
+        """devuelve el estado"""
         if self.__funcionando=="funcionando":
             return True
         else:
             return False
     """devuelve el nombre de la cafetera"""        
     def get_nombre(self):
+        """devuelve el nombre de la cafetera"""
         return self.__nombre_id
-    """devuelve la capacidad de la cafetera"""    
+
     def get_capacidad(self):
+        """devuelve la capacidad de la cafetera""" 
         return self.__capacidad
-    """devuelve el contenido de la cafetera"""    
+       
     def get_contenido(self):
+        """devuelve el contenido de la cafetera""" 
         return self.__cant
-    """devuelve el tipo de cafe que tiene la cafetera"""    
+        
     def get_tipo_de_cafe():
+        """devuelve el tipo de cafe que tiene la cafetera"""
         return self.__tipo_de_cafe      
-    """cuanto deja recargar la cafetera"""    
+        
     def get_admisible(self):
-        # Retorna cuanto le falta a una cafetera para alcanzar su capacidad.
-        return self.__capacidad - self.__cant
+        """Retorna cuanto le falta a una cafetera para alcanzar su capacidad."""
+        return self.get_capacidad() - self.get_contenido()
 
     def esta_llena(self):
         # Si el elemento cafetera esta llena cap=cant devuelve true, sino devuelve false
-        if self.__capacidad == self.__cant:
+        if self.get_capacidad() == self.get_contenido():
             return True
         else:
             return False
-    """llena la cafetera"""            
+                
     def llenar_cafetera(self):
-        self.__cant = self.__capacidad
+        """llena la cafetera"""
+        self.get_contenido() = self.get_capacidad()
 
-    """recarga la cantidad por CC"""    
+    
     def recargar(self, cantidad):
-        # metodo para recargar una cafetera, recibe la cantidad a recargar. Si se pasa dev. un error.
+        """metodo para recargar una cafetera, recibe la cantidad a recargar. Si se pasa dev. un error."""
         if self.get_estado():
             if cantidad <= get_admisible():
-                self.__cant += cantidad
+                self.get_contenido() += cantidad
             else:
                 raise ValueError(
                     "No hay suficiente capacidad para recargar esa cantidad")    
         else:
             raise Exception("Cafetera defectuosa, necesita mantenimiento")
             
-    """devuelve cuantas tazas podes servir con lo que tiene la cafetera"""        
+         
     def cuantas_tazas(self, capacidad_taza=200):
-        # calcula la cantidad de tazas que se pueden servir con una cafetera. Recibe
-        # el tamaño de la taza
-        return self.__cant//capacidad_taza
+        """calcula la cantidad de tazas que se pueden servir con una cafetera. Recibe
+        el tamaño de la taza"""
+        return self.get_contenido()//capacidad_taza
+
     """vacia la cafetera"""
     def vaciar_cafetera(self):
-        self.__cant = 0
-    """"""    
+        self.get_contenido() = 0
+        
     def esta_vacia(self):
-        # Retorna True si la cafetera no tiene cafe, caso contrario retorna False
-        if self.__capacidad == self.get_admisible():
+        """Retorna True si la cafetera no tiene cafe, caso contrario retorna False"""
+        if self.get_capacidad() == self.get_admisible():
             return True
         else:
             return False    
@@ -81,14 +89,14 @@ class Cafetera:
         raises
                 ValueError si no hay suficiente cafe
         """
-        if self.__cant >= cantidad and get_estado():
-            self.__cant = self.__cant - cantidad
+        if self.get_contenido() >= cantidad and get_estado():
+            self.get_contenido() = self.get_contenido() - cantidad
         else:
             raise ValueError("En este momento no se puede servir cafe")
             
 
     def str_cant_sobre_capacidad(self):
-        cadena = str(self.__cant) + "/" + str(self.__capacidad)
+        cadena = str(self.get_contenido()) + "/" + str(self.get_capacidad())
         return cadena
 
     def get_marca(self):
@@ -114,12 +122,22 @@ class Cafetera:
 
 
 class Cafeteria:
+    
     def __init__(self, nombre):
+        """crea una objeto Cafeteria"""
         self.__lista_cafeteras = []
         self.__nombre = nombre
 
+    def get_nombre(self):
+        """devuelve nombre de la cafeteria"""
+        return self.__nombre       
+    def get_lista_cafetera(self):
+        """devuelve la lista de cafeteras"""
+        return self.__lista_cafeteras 
+
     def get_cantidad_cafeteras(self):
-        return len(self.__lista_cafeteras)
+        """ devuelve la cantidad de cafeteras""" 
+        return len(self.get_lista_cafetera())
 
     def buscar_cafetera_por_nombre(self, nombre):
         """
@@ -129,7 +147,7 @@ class Cafeteria:
         return:
             Un objeto cafetera
         """
-        for item in self.__lista_cafeteras:
+        for item in self.get_lista_cafetera():
             if item.get_nombre() == nombre:
                 return item
         return False
@@ -148,7 +166,7 @@ class Cafeteria:
         if isinstance(cafetera, Cafetera):
             # Si no encuentra la cafetera
             if not self.buscar_cafetera_por_nombre(cafetera.get_nombre()):
-                self.__lista_cafeteras.append(cafetera)  # la agrega
+                self.get_lista_cafetera().append(cafetera)  # la agrega
                 return True
             else:
                 raise ValueError(
@@ -158,19 +176,12 @@ class Cafeteria:
             raise ValueError("No es una cafetera válida. Agregue una cafetera")
 
 
-
-        
-
-
-
     def quitar_cafetera_nombre(self, nombrecaf):
-        cafetera_borrada = False
-        for cafet in self.__cafeteras:
-            if cafet.get_nombre() == nombrecaf:
-                self.__cafeteras.remove(cafet)
-                cafetera_borrada = True
-        if cafetera_borrada:
-            print("Se quito la cafetera : {}".format(cafet.get_nombre()))
+        """borra la cafetera por nombre"""
+        cafet=self.buscar_cafetera_por_nombre(nombrecaf)
+        if cafet:
+            self.get_lista_cafetera().remove(cafetera_borrada)
+            print("Se quito la cafetera : {}".format(cafet.get_nombre()))          
         else:
             print("No se encontró la cafetera {} en la lista.".format(nombrecaf))
 
