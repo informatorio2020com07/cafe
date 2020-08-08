@@ -1,4 +1,5 @@
-import cafe
+from cafe import Cafetera
+from cafe import Cafeteria
 import sys
 import os
 import mysql.connector
@@ -10,16 +11,15 @@ conexion1=mysql.connector.connect(
     )
 cursor=conexion1.cursor()
 
-query="SELECT * FROM cafeteria"
+query="SELECT nombre_id,marca,modelo,id_tipo,capacidad, cantidad,funcionando FROM cafetera"
 cursor.execute(query)
 cafeteria=Cafeteria("Cafecito007")
 for registro in cursor:
-    cafetera=Cafetera(registro[0],registro[1],registro[2],registro[3],registro[4],registro[5],registro[6],registro[7])   
+    cafetera=Cafetera(registro[0],registro[1],registro[2],registro[3],registro[4],registro[5],registro[6])
     cafeteria.agregar_cafetera(cafetera)
 query="SELECT * FROM tipo_de_cafe"
 cursor.execute(query)
 lista_tipo=cursor.fetchall()
-
 
 def quitar_cafetera(cafeteria):
     print("Quitar cafetera".center(centrado, "-"))
