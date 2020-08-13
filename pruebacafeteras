@@ -1,0 +1,23 @@
+import cafetera
+#Método para cambiar los estados de las caferas
+#Defectuoso o funcionando
+def estado_cafeteras(self,nombre_id,estado):
+	continuar=True
+	self.lista_cafeteras=[]
+	self.lista_estados=[]
+	while continuar==True:
+		nombre_id=input("ingrese nombre de la cafetera")
+		self.__lista_cafeteras.append(nombre_id)
+		a=input("¿Desea agregar otra cafetera? S/N")
+		if a=="N":
+			continuar==False
+		else:
+			continuar==True
+	for i in self.lista_cafeteras:
+		print(i)
+		estado=input("Ingrese estado de la cafetera. 'D'=Defectuoso. 'F'=Funcionando")
+		estado.upper
+		if (estado=="D" or estado=="F"):
+			self.__lista_estados.append(estado)
+		else:
+			print("vuelva a intentarlo solamente utilizando 'D' o 'F'")
