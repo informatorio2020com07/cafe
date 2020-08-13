@@ -3,41 +3,70 @@ from cafe import Cafeteria
 import sys
 import os
 import mysql.connector
-conexion1=mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="cafeteria"
-    )
-cursor=conexion1.cursor()
+def cargar_base_datos():
+    conexion1=mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="root",
+        database="cafeteria"
+        )
+    cursor=conexion1.cursor()
 
-query="SELECT nombre_id,marca,modelo,id_tipo,capacidad, cantidad,funcionando FROM cafetera"
-cursor.execute(query)
-cafeteria=Cafeteria("Cafecito007")
-for registro in cursor:
-    cafetera=Cafetera(registro[0],registro[1],registro[2],registro[3],registro[4],registro[5],registro[6])
-    cafeteria.agregar_cafetera(cafetera)
-query="SELECT * FROM tipo_de_cafe"
-cursor.execute(query)
-lista_tipo=cursor.fetchall()
+    query="SELECT nombre_id,marca,modelo,id_tipo,capacidad, cantidad,funcionando FROM cafetera"
+    cursor.execute(query)
+    cafeteria1=Cafeteria("Cafecito007")
+    for registro in cursor:
+        cafetera=Cafetera(registro[0],registro[1],registro[2],registro[3],registro[4],registro[5],registro[6])
+        cafeteria1.agregar_cafetera(cafetera)
+    query="SELECT * FROM tipo_de_cafe"
+    cursor.execute(query)
+    lista_tipo=cursor.fetchall()
+    return cafeteria1,lista_tipo    
 
 def quitar_cafetera(cafeteria):
-    print("Quitar cafetera".center(centrado, "-"))
+    print("Quitar cafetera".center(20, "-"))
     print("")
-    cafetera=cafeteria.get_cafeteras()
-    mostrar_cafeteras_enumeradas(cafeteras)
+    listar_cafeteras()
     borrar=int(input("Que cafetera desea borrar: "))
+    """cafetera=cafeteria.get_cafeteras()
+    mostrar_cafeteras_enumeradas(cafeteras)
+    
     cafetera_borrar=cafeteras[borrar -1]
     cafeteria.quitar_cafetera(cafetera_borrar)
     input()
-    print(" ",cafetera_borrar.get_nombre(),cafetera_borrar.str_cant_sobre_capacidad())
+    print(" ",cafetera_borrar.get_nombre(),cafetera_borrar.str_cant_sobre_capacidad())"""
 
-def listar_cafetera():
-    pass
+def listar_cafetera(lista_cafetera):
+    """ va a imprimir una lista de todas las cafeteras"""
+    for cafetera in lista_cafetera:
+        mostrar=cafetera.to_dict()
+        print("-----------")
+            for x in mostrar:
+                print(x,":",motrar[x])
 
-def agregar_cafetera():
-    pass
-    
+def agregar_cafetera(lista_tipo):
+    print("Carga Cafetera: ")
+    nombre = input("Ingrese el Nombre de la cafetera: ")
+    print("")
+    marca = input("Ingrese el Marca de la cafetera: ")
+    print("")
+    modelo = input("Ingrese el Modelo de la cafetera: ")
+    print("")
+    print("Tipos de Cafe:")
+    for x in lista_tipo:
+        print(x,end=" ")
+    tipo_de_cafe = input("Ingrese el Tipo de Cafe de la cafetera: ")
+    print("")
+    capacidad = input("Ingrese el Capacidad de la cafetera: ")
+    print("")
+    cant = input("Ingrese el Cantidad de la cafetera: ")
+    print("")
+    print("ingrese el estado de la cafetera funcionando - no funcionando")
+    funcionando = input("Ingrese el estado de la cafetera: ")
+
+    cafetera=Cafetera(nombre,marca,modelo,tipo_de_cafe,capacidad, cant,funcionando)
+    cafeteria.agregar_cafetera(cafetera)
+
 def usar_cafetera():
     pass
         
@@ -48,6 +77,7 @@ def servir_cafe():
     pass
         
 def salir():
+    
     sys.exit(0)
     
 def menu_pantalla(opciones):    
@@ -73,6 +103,8 @@ def menu_pantalla(opciones):
     
         
 def menu_principal():
+    #carga las cafeteras de la base de dato
+    cafeteria,lista_tipo=cargar_base_datos()
     
     menuPrincipal_opciones = ("Administración de cafeteras", """
     1- Listar Cafeteras
@@ -94,15 +126,16 @@ def menu_principal():
         menu_pantalla(menuPrincipal_opciones)
         opcion = input("elige una opción: ")
         accion = opciones.get(opcion)
+        print(accion)
         if accion:
-            accion()
+            accion(cafeteria)
         else:
             print("{0} no es una opción válida".format(opcion))
 
     
     
 def main():
-    pass
+    
     #cafeteria = iniciar_cafeteria() #¿?no he visto la función aún
     menu_principal()
 

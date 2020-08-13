@@ -141,7 +141,8 @@ class Cafeteria:
 
     def get_nombre(self):
         """devuelve nombre de la cafeteria"""
-        return self.__nombre       
+        return self.__nombre
+               
     def get_lista_cafetera(self):
         """devuelve la lista de cafeteras"""
         return self.__lista_cafeteras 
