@@ -198,6 +198,7 @@ class Cafeteria:
             print("No se encontró la cafetera {} en la lista.".format(nombrecaf))
 
 ##Metodo servir cafe:
+# terminado
 if __name__ == "__main__":
     cafetera1 = Cafetera(nombre_id="xcv45",marca="olivetti",modelo=2016,tipo_de_cafe="Arabica",capacidad=2500, cant=1500,funcionando="funcionando")
 
