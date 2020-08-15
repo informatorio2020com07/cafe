@@ -68,7 +68,7 @@ class Cafetera:
     def recargar(self, cantidad):
         """metodo para recargar una cafetera, recibe la cantidad a recargar. Si se pasa dev. un error."""
         if self.get_estado():
-            if cantidad <= get_admisible():
+            if cantidad <= self.get_admisible():
                 self.set_contenido(self.get_contenido()+cantidad)
             else:
                 raise ValueError(
