@@ -105,7 +105,7 @@ class Cafetera:
         raises
                 ValueError si no hay suficiente cafe
         """
-        if self.get_contenido() >= cantidad and get_estado():
+        if self.get_contenido() >= cantidad and self.get_estado():
             self.set_contenido(self.get_contenido() - cantidad)
         else:
             raise ValueError("En este momento no se puede servir cafe")
