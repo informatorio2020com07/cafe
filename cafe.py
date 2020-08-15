@@ -192,7 +192,7 @@ class Cafeteria:
         """borra la cafetera por nombre"""
         cafet=self.buscar_cafetera_por_nombre(nombrecaf)
         if cafet:
-            self.get_lista_cafetera().remove(cafetera_borrada)
+            self.get_lista_cafetera().remove(cafet)
             print("Se quito la cafetera : {}".format(cafet.get_nombre()))          
         else:
             print("No se encontró la cafetera {} en la lista.".format(nombrecaf))
