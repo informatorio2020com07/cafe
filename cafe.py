@@ -29,7 +29,7 @@ class Cafetera:
         """devuelve el contenido de la cafetera""" 
         return self.__cant
         
-    def get_tipo_de_cafe():
+    def get_tipo_de_cafe(self):
         """devuelve el tipo de cafe que tiene la cafetera"""
         return self.__tipo_de_cafe      
         
