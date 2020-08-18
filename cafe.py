@@ -24,10 +24,18 @@ class Cafetera:
     def get_capacidad(self):
         """devuelve la capacidad de la cafetera""" 
         return self.__capacidad
+
+    def get_capacidad_en_litros(self):
+        """devuelve la capacidad de la cafetera en litros"""
+        return self.get_capacidad()//1000
        
     def get_contenido(self):
         """devuelve el contenido de la cafetera""" 
         return self.__cant
+
+    def get_contenido_en_litros(self):
+        """devuelve el contenido de la cafetera en litros"""
+        return self.get_contenido()//1000
         
     def get_tipo_de_cafe(self):
         """devuelve el tipo de cafe que tiene la cafetera"""

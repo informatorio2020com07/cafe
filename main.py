@@ -41,8 +41,8 @@ def listar_cafetera(lista_cafetera):
     for cafetera in lista_cafetera:
         mostrar=cafetera.to_dict()
         print("-----------")
-            for x in mostrar:
-                print(x,":",motrar[x])
+        for x in mostrar:
+            print(x,":",motrar[x])
 
 def agregar_cafetera(lista_tipo):
     print("Carga Cafetera: ")
@@ -57,9 +57,9 @@ def agregar_cafetera(lista_tipo):
         print(x,end=" ")
     tipo_de_cafe = input("Ingrese el Tipo de Cafe de la cafetera: ")
     print("")
-    capacidad = input("Ingrese el Capacidad de la cafetera: ")
+    capacidad = input("Ingrese la Capacidad de la cafetera: ")
     print("")
-    cant = input("Ingrese el Cantidad de la cafetera: ")
+    cant = input("Ingrese la Cantidad de café de la cafetera: ")
     print("")
     print("ingrese el estado de la cafetera funcionando - no funcionando")
     funcionando = input("Ingrese el estado de la cafetera: ")
@@ -67,8 +67,65 @@ def agregar_cafetera(lista_tipo):
     cafetera=Cafetera(nombre,marca,modelo,tipo_de_cafe,capacidad, cant,funcionando)
     cafeteria.agregar_cafetera(cafetera)
 
-def usar_cafetera():
-    pass
+def usar_cafetera(cafeteria):
+    cafetera = cafeteria.get_lista_cafetera()
+    print("Opciones de cafeteras: ", cafetera)
+	
+	#elegir cafetera
+    cafetera_seleccion = int(input("Qué cafetera usar: "))
+    cafetera_seleccionada = cafetera[cafetera_seleccion]
+
+    opcion = 0
+    while opcion not in (1,2,3,4):
+        print("1- servir cafe")
+        print("2- recargar cafe")
+        print("3- llenar cafetera")
+        print("4- vaciar cafetera")
+        opcion = int(input("Ingrese una opcion: "))
+
+    if opcion == 1:
+        #servir café eligiendo cafetera
+        opcion1=True
+        while opcion1:
+            print("Desea operar en: ")
+            print("1- Taza")
+            print("2- CC")
+            opcion1=int(input("Ingrese opción: "))
+            if opcion1==1:
+                tamaño=int(input("Tamaño de taza: "))
+                cantidad_tazas=cafetera_seleccionada.cuantas_tazas(tamaño)
+                print("puede servir", cantidad_tazas)
+                servir_taza=int(input("Cuántas tazas: "))
+                try:
+                    cafetera_seleccionada.servir(tamaño*servir_taza)
+                    break
+                except ValueError as ex:
+                    print(ex)
+                    opcion1=True
+            elif opcion1==2:
+                cc=int(input("Cuántos cc: "))
+                try:
+                    cafetera_seleccionada.servir(cc)
+                    break
+                except ValueError as ex:
+                    print(ex)
+                    opcion1=True
+            else:
+                print("No es una opción posible")
+                opcion1=True
+
+    elif opcion == 2:
+        #recargar cafe
+        print(cafetera_seleccionada.str_cant_sobre_capacidad())
+        cant_cafe_recargar=int(input("Cuántos cc de café desea recargar: "))
+        try:
+            cafetera_seleccionada.recargar(cant_cafe_recargar)
+        except ValueError as error:
+            print(error)
+    elif opcion == 3:
+        cafetera_seleccionada.llenar_cafetera()
+    else:
+        cafetera_seleccionada.vaciar_cafetera()
         
 def estado_cafetera():
     pass
