@@ -45,6 +45,10 @@ class Cafetera:
         """devuelve el modelo"""
         return self.__modelo
 
+    def get_funcionando(self):
+        """devuelve si funciona"""
+        return self.__funcionando
+
     def set_contenido(self,cantidad):
             """cambia el contenido de capacidad"""
             self.__cant=cantidad
