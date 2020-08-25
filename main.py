@@ -5,17 +5,19 @@ import os
 import mysql.connector
 
 def conexion():
+    """conexion con la base de datos"""
     conexion1=mysql.connector.connect(
         host="localhost",
         user="root",
         password="root",
         database="cafeteria"
         )
-    cursor=conexion1.cursor()
-    return cursor
+    return conexion1
+
+
 def cargar_base_datos():
     """carga la lista de cafe"""
-    cursor=conexion()
+    cursor=conexion().cursor()
     query="SELECT nombre_id,marca,modelo,id_tipo,capacidad, cantidad,funcionando FROM cafetera"
     cursor.execute(query)
     cafeteria1=Cafeteria("Cafecito007")
@@ -41,11 +43,12 @@ def listar_cafetera(cafeteria):
 
 def guardar_base_datos(cafetera):
     """guarda la nuevas cafetera DB"""
-    cursor=conexion()
+    cursor=conexion().cursor()
     query1="""INSERT INTO cafetera(nombre_id,marca,modelo,Id_tipo,capacidad,
     cantidad,funcionando) VALUES(%s,%s,%s,%s,%s,%s,%s)"""
     datos=(cafetera.get_nombre(),cafetera.get_marca(),cafetera.get_modelo(),cafetera.get_tipo_de_cafe(),cafetera.get_capacidad(),cafetera.get_contenido(),cafetera.get_funcionando())
     cursor.execute(query,datos)
+    conexion().commit()
 
 
 def agregar_cafetera(lista_tipo):
@@ -84,11 +87,13 @@ def agregar_cafetera(lista_tipo):
 def modificar_base_datos(cafetera):
     """modifica la cafetera DB
     usar en usar cafetera estado y servir"""
-    cursor=conexion()
+    cursor=conexion().cursor()
     query="""UPDATE cafetera set nombre_id=%s,marca=%s,modelo=%s,Id_tipo=%s,
     capacidad=%s,cant=%s,funcionando=%s where nombre=%s"""
     datos=(cafetera.get_nombre(),cafetera.get_marca(),cafetera.get_modelo(),cafetera.get_tipo_de_cafe(),cafetera.get_capacidad(),cafetera.get_contenido(),cafetera.get_funcionando(),cafetera.get_nombre())
     cursor.execute(query,datos)
+    conexion().commit()
+
 
 
 def usar_cafetera():
@@ -105,10 +110,11 @@ def servir_cafe():
 
 def borrar_base_datos(cafetera):
     """borrar la cafetera de DB"""
-    cursor=conexion()
+    cursor=conexion().cursor()
     query="DELETE FROM cafetera where nombre_id=%s"
     dato=cafetera.get_nombre()
     cursor.execute(query,dato)
+    conexion().commit()
 
 
 def quitar_cafetera(cafeteria):
@@ -127,6 +133,9 @@ def quitar_cafetera(cafeteria):
 
         
 def salir(cafeteria):
+    cursor=conexion().cursor()
+    cursor.close()
+    conexion().close()
     sys.exit(0)
 
     
