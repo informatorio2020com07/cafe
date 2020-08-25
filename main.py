@@ -3,8 +3,8 @@ from cafe import Cafeteria
 import sys
 import os
 import mysql.connector
-def cargar_base_datos():
-    """carga la lista de cafe"""
+
+def conexion():
     conexion1=mysql.connector.connect(
         host="localhost",
         user="root",
@@ -12,7 +12,10 @@ def cargar_base_datos():
         database="cafeteria"
         )
     cursor=conexion1.cursor()
-
+    return cursor
+def cargar_base_datos():
+    """carga la lista de cafe"""
+    cursor=conexion()
     query="SELECT nombre_id,marca,modelo,id_tipo,capacidad, cantidad,funcionando FROM cafetera"
     cursor.execute(query)
     cafeteria1=Cafeteria("Cafecito007")
@@ -24,7 +27,9 @@ def cargar_base_datos():
     lista_tipo=cursor.fetchall()
     return cafeteria1,lista_tipo
 
-def listar_cafetera(lista_cafetera):
+
+def listar_cafetera(cafeteria):
+    listar_cafetera=cafeteria.get_lista_cafetera()
     """ va a imprimir una lista de todas las cafeteras"""
     for index,cafetera in enumerate(lista_cafetera):
         mostrar=cafetera.to_dict()
@@ -33,12 +38,15 @@ def listar_cafetera(lista_cafetera):
             for x in mostrar:
                 print(x,":",motrar[x])
 
+
 def guardar_base_datos(cafetera):
     """guarda la nuevas cafetera DB"""
+    cursor=conexion()
     query1="""INSERT INTO cafetera(nombre_id,marca,modelo,Id_tipo,capacidad,
     cantidad,funcionando) VALUES(%s,%s,%s,%s,%s,%s,%s)"""
     datos=(cafetera.get_nombre(),cafetera.get_marca(),cafetera.get_modelo(),cafetera.get_tipo_de_cafe(),cafetera.get_capacidad(),cafetera.get_contenido(),cafetera.get_funcionando())
     cursor.execute(query,datos)
+
 
 def agregar_cafetera(lista_tipo):
     """Carga de datos"""
@@ -72,37 +80,41 @@ def agregar_cafetera(lista_tipo):
     except Exception as ex:
         print(ex)
         
+
 def modificar_base_datos(cafetera):
     """modifica la cafetera DB
     usar en usar cafetera estado y servir"""
+    cursor=conexion()
     query="""UPDATE cafetera set nombre_id=%s,marca=%s,modelo=%s,Id_tipo=%s,
     capacidad=%s,cant=%s,funcionando=%s where nombre=%s"""
     datos=(cafetera.get_nombre(),cafetera.get_marca(),cafetera.get_modelo(),cafetera.get_tipo_de_cafe(),cafetera.get_capacidad(),cafetera.get_contenido(),cafetera.get_funcionando(),cafetera.get_nombre())
     cursor.execute(query,datos)
 
+
 def usar_cafetera():
     pass
-        
+      
+
 def estado_cafetera():
     pass
-    
+   
+
 def servir_cafe():
     pass
 
 
-
-
-
 def borrar_base_datos(cafetera):
     """borrar la cafetera de DB"""
+    cursor=conexion()
     query="DELETE FROM cafetera where nombre_id=%s"
     dato=cafetera.get_nombre()
     cursor.execute(query,dato)
 
+
 def quitar_cafetera(cafeteria):
     print("Quitar cafetera".center(20, "-"))
     print("")
-    listar_cafeteras(cafeteria.get_lista_cafetera())
+    listar_cafeteras(cafeteria)
     borrar=int(input("Que cafetera desea borrar ingrese numero: "))
     if borrar >= cafeteria.get_cantidad_cafeteras()
         cafetera_borrar=cafeteria.get_lista_cafetera()[borrar -1]
@@ -113,10 +125,10 @@ def quitar_cafetera(cafeteria):
     else:
         print("No existe numero de cafetera")
 
-
         
 def salir(cafeteria):
     sys.exit(0)
+
     
 def menu_pantalla(opciones):    
 #imprime en pantalla cualquier menu de opciones siempre que se ingrese la lista o tupla de opciones correspondientes
@@ -166,7 +178,10 @@ def menu_principal():
         accion = opciones.get(opcion)
         print(accion)
         if accion:
-            accion(cafeteria)
+            if accion == agregar_cafetera:
+                accion(lista_tipo)
+            else:
+                accion(cafeteria)
         else:
             print("{0} no es una opción válida".format(opcion))
 
