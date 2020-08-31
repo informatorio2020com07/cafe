@@ -10,7 +10,7 @@ insert into tipo_de_cafe(
 	descripcion
 )values(
 	"Robusta",
-	"un cafe mucho más amargo, un sabor mas intenso,crear esa exquisita capa de crema de cafe caracteristica"
+	"un cafe mucho mas amargo, un sabor mas intenso,crear esa exquisita capa de crema de cafe caracteristica"
 	);
 insert into tipo_de_cafe(
 	nombre,

@@ -164,7 +164,7 @@ class Cafeteria:
             Un objeto cafetera
         """
         for item in self.get_lista_cafetera():
-            if item.get_nombre() == nombre:
+            if item.get_nombre().lower() == nombre.lower():
                 return item
         return False
 

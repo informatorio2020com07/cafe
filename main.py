@@ -48,6 +48,8 @@ def listar_tipo_cafe(cafeteria, lista_tipo):
     for tipo in lista_tipo:
         print("Nombre:",tipo[1])
         print("Descripción:",tipo[2])
+        print("")
+
 
 
 def guardar_base_datos(cafetera):
@@ -83,7 +85,7 @@ def agregar_cafetera(cafeteria,lista_tipo):
     print("")
     cant = input("Ingrese el Cantidad de la cafetera: ")
     print("")
-    print("ingrese el estado de la cafetera funcionando - no funcionando")
+    print("ingrese el estado de la cafetera funcionando - descompuesta")
     funcionando = input("Ingrese el estado de la cafetera: ")
     """Creamos el objeto cafetera y lo agregamos a la lista siempre que el nombre no se repita"""
     cafetera=Cafetera(nombre,marca,modelo,tipo_de_cafe,capacidad,cant,funcionando)
@@ -99,7 +101,7 @@ def modificar_base_datos(cafetera):
     """modifica la cafetera DB
     usar en usar cafetera estado y servir"""
     query="""UPDATE cafetera set nombre_id=%s,marca=%s,modelo=%s,Id_tipo=%s,
-    capacidad=%s,cant=%s,funcionando=%s where nombre=%s"""
+    capacidad=%s,cantidad=%s,funcionando=%s where nombre_id=%s"""
     datos=(cafetera.get_nombre(),cafetera.get_marca(),cafetera.get_modelo(),cafetera.get_tipo_de_cafe(),cafetera.get_capacidad(),cafetera.get_contenido(),cafetera.get_funcionando(),cafetera.get_nombre())
     cursor.execute(query,datos)
     con.commit()
@@ -107,15 +109,78 @@ def modificar_base_datos(cafetera):
 
 
 def usar_cafetera(cafeteria,lista_tipo):
-    pass
-      
 
-def estado_cafetera(cafeteria,lista_tipo):
-    pass
-   
+    modificar_base_datos(cafetera)
+
 
 def servir_cafe(cafeteria,lista_tipo):
-    pass
+    listar_tipo_cafe(cafeteria, lista_tipo)
+    cafeteria_aux=Cafeteria("Auxiliar")
+    tipo=input("Que cafe desea tomar: ")
+    for index,x in enumerate(lista_tipo):
+        if tipo.lower()==x[1].lower():
+            break
+    lista_cafetera=cafeteria.get_lista_cafetera()
+    for x in lista_cafetera:
+        if x.get_tipo_de_cafe()== index+1 and x.get_estado():
+            cafeteria_aux.agregar_cafetera(x)
+    print("""
+        1 - Chico        100cc
+        2 - Medio        200cc
+        3 - Medio Grande 250cc
+        4 - Grande       300cc
+        """)
+    opc= {"1":100,
+        "2":200,
+        "3":250,
+        "4":300 }
+    tamaño=input("Ingrese número: ")
+    cuanto=int(input("Cuantas tazas:"))
+    while cuanto>0:
+        estado_cafetera(cafeteria_aux, lista_tipo)
+        usar=input("Ingrese el nombre de la cafetera que desea usar: ")
+        cafetera=cafeteria_aux.buscar_cafetera_por_nombre(usar)
+        taza=cafetera.cuantas_tazas(opc.get(tamaño))
+        if cuanto<=taza:
+            cafetera.servir(cuanto*opc.get(tamaño))
+            cuanto=0
+            print("Disfrute su cafe")
+        else:
+            print(cafetera.get_nombre()," solo puede servir ",taza," tazas")
+            cafetera.servir(cuanto*opc.get(tamaño))
+            cuanto=cuanto-taza
+            if len(cafeteria_aux.get_lista_cafetera())==1:
+                print("No hay mas de ese tipo de cafe")
+                cuanto=0
+        modificar_base_datos(cafetera)
+ 
+
+def estado_cafetera(cafeteria,lista_tipo):
+    lista_cafetera=cafeteria.get_lista_cafetera()
+    
+    lista_estado=[]
+    for cafetera in lista_cafetera:
+        estado_cafet=[]
+        estado_cafet.append(cafetera.get_nombre())
+        estado_cafet.append(cafetera.get_marca())
+        estado_cafet.append(cafetera.get_capacidad())
+        estado_cafet.append(cafetera.get_contenido())
+        if cafetera.get_estado():
+            estado_cafet.append("funcionando")
+        else:
+            estado_cafet.append("descompuesta")
+        lista_estado.append(estado_cafet)
+
+    tabla="""\
++-------------------------------------------------------+
+| cafetera    marca     capacidad contenido   estado    |
+|-------------------------------------------------------|
+{}
++-------------------------------------------------------+\
+"""
+    tabla=tabla.format('\n'.join("| {:<9} {:<10} {:>10} {:>8} {:>12} |".format(*fila)
+        for fila in lista_estado))
+    print(tabla)
 
 
 def borrar_base_datos(cafetera):
@@ -143,7 +208,7 @@ def quitar_cafetera(cafeteria,lista_tipo):
         print("No existe ese numero de cafetera")
 
         
-def salir(cafeteria):
+def salir(cafeteria,lista_tipo):
     cursor.close()
     con.close()
     sys.exit(0)
@@ -170,11 +235,9 @@ def menu_pantalla(opciones):
     print(" ")
     print(opciones[1])
     
-        
-def menu_principal():
-    #carga las cafeteras de la base de dato
-    cafeteria,lista_tipo=cargar_base_datos()
-    
+
+def menu_principal(cafeteria, lista_tipo):
+ 
     menuPrincipal_opciones = ("Administración de cafeteras", """
     1- Listar Cafeteras
     2- Listar Tipo de Cafe
@@ -185,31 +248,32 @@ def menu_principal():
     7- Servir café
     8- Salir
     """)
+
     opciones = {"1" : listar_cafetera,
         "2" : listar_tipo_cafe,
-        "3" : agregar_cafetera, 
+        "3" : agregar_cafetera,
         "4" : quitar_cafetera, 
         "5" : usar_cafetera, 
         "6" : estado_cafetera, 
         "7" : servir_cafe, 
         "8" : salir }
+
     while True:
         menu_pantalla(menuPrincipal_opciones)
         opcion = input("elige una opción: ")
         accion = opciones.get(opcion)
-        print(accion)
         if accion:
             accion(cafeteria, lista_tipo)
         else:
             print("{0} no es una opción válida".format(opcion))
-        a=input("")
-
-    
+        print("")
+        input("Volver al menu")
     
 def main():
     
-    #cafeteria = iniciar_cafeteria() #¿?no he visto la función aún
-    menu_principal()
+    cafeteria, lista_tipo=cargar_base_datos()
+    #carga las cafeteras de la base de dato
+    menu_principal(cafeteria, lista_tipo)
 
 
 if __name__ == "__main__":
