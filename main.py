@@ -42,10 +42,13 @@ def listar_cafetera(cafeteria, lista_tipo):
             else:
                 print("     ",x,":",mostrar[x])
 
+
 def listar_tipo_cafe(cafeteria, lista_tipo):
+    """listar tipos de cafe"""
     for tipo in lista_tipo:
         print("Nombre:",tipo[1])
         print("Descripción:",tipo[2])
+
 
 def guardar_base_datos(cafetera):
     """guarda la nuevas cafetera DB"""
