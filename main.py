@@ -13,6 +13,11 @@ con=mysql.connector.connect(
         )
 cursor=con.cursor()
 
+def controlar_numero(valor):
+    if valor.isdigit():
+        return int(valor)
+    else:
+        return False
 
 def cargar_base_datos():
     """carga la lista de cafe"""
@@ -45,7 +50,8 @@ def listar_cafetera(cafeteria, lista_tipo):
 
 def listar_tipo_cafe(cafeteria, lista_tipo):
     """listar tipos de cafe"""
-    for tipo in lista_tipo:
+    for x,tipo in enumerate(lista_tipo):
+        print(x+1,".-")
         print("Nombre:",tipo[1])
         print("Descripción:",tipo[2])
         print("")
@@ -68,33 +74,39 @@ def agregar_cafetera(cafeteria,lista_tipo):
     print("")
     marca = input("Ingrese el Marca de la cafetera: ")
     print("")
-    modelo = input("Ingrese el Modelo de la cafetera: ")
-    print("")
-    print("Tipos de Cafe:")
-    for x in lista_tipo:
-        print(x[1],end=" |")
-    print("")
-    tipo_de_cafe = input("Ingrese el Tipo de Cafe de la cafetera: ")
-    """cambia el tipo cafe por su indice"""
-    for index,x in enumerate(lista_tipo):
-        if tipo_de_cafe.lower()==x[1].lower():
-            tipo_de_cafe=index+1
-            break
-    print("")
-    capacidad = input("Ingrese el Capacidad de la cafetera: ")
-    print("")
-    cant = input("Ingrese el Cantidad de la cafetera: ")
-    print("")
-    print("ingrese el estado de la cafetera funcionando - descompuesta")
-    funcionando = input("Ingrese el estado de la cafetera: ")
-    """Creamos el objeto cafetera y lo agregamos a la lista siempre que el nombre no se repita"""
-    cafetera=Cafetera(nombre,marca,modelo,tipo_de_cafe,capacidad,cant,funcionando)
-    try:
-        cafeteria.agregar_cafetera(cafetera)
-        guardar_base_datos(cafetera)
-        print("Guardado con exito")
-    except Exception as ex:
-        print(ex)
+    modelo = input("Ingrese el Modelo(año) de la cafetera: ")
+    if modelo.isdigit():
+        print("")
+        print("Tipos de Cafe:")
+        for y,x in enumerate(lista_tipo):
+            print(x[1],end=" |")
+        print("")
+        print("Que cafe desea tomar 1 -",len(lista_tipo),": ",end="")
+        tipo_de_cafe=input()
+        tipo_de_cafe=controlar_numero(tipo_de_cafe)
+        if tipo_de_cafe:
+            if tipo_de_cafe<len(lista_tipo):
+                print("")
+                capacidad =input("Ingrese el Capacidad de la cafetera: ")
+                print("")
+                capacidad=controlar_numero(capacidad)
+                if capacidad:
+                    cant =input("Ingrese el Cantidad de la cafetera: ")
+                    print("")
+                    cant=controlar_numero(cant)
+                    if cant:
+                        if cant<capacidad:
+                            print("Cafetara que esten 'funcionando' o 'descompuesta'")
+                            funcionando = input("Ingrese el estado de la cafetera: ")
+                            if funcionando=="funcionando" or funcionando=="descompuesta":
+                                """Creamos el objeto cafetera y lo agregamos a la lista siempre que el nombre no se repita"""
+                                cafetera=Cafetera(nombre,marca,modelo,tipo_de_cafe,capacidad,cant,funcionando)
+                                try:
+                                    cafeteria.agregar_cafetera(cafetera)
+                                    guardar_base_datos(cafetera)
+                                    print("Guardado con exito")
+                                except Exception as ex:
+                                    print(ex)
 
 
 def modificar_base_datos(cafetera):
@@ -109,50 +121,91 @@ def modificar_base_datos(cafetera):
 
 
 def usar_cafetera(cafeteria,lista_tipo):
+    estado_cafetera(cafeteria, lista_tipo)
+    Elige=input("Nombre de cafetera: ")
+    cafetera=cafeteria.buscar_cafetera_por_nombre(Elige)
+    if cafetera:
+        print("""
+            1 - Llenar
+            2 - Vaciar
+            3 - Recargar
+            4 - cambiar estado
+            5 - quitar cafetera
+            """)
 
-    modificar_base_datos(cafetera)
-
+        elegido=input("Ingrese la opción deseada: ")
+        try:
+            if elegido=="1":
+                cafetera.llenar_cafetera()
+                print("cafetera llena")
+            elif elegido=="2":
+                cafetera.vaciar_cafetera()
+                print("cafetera vacia")
+            elif elegido=="3":
+                cantidad=input("Ingrese cuanto desea recargar: ")
+                cantidad=controlar_numero(cantidad)
+                if cantidad:
+                    cafetera.recargar(cantidad)
+                    print("cafetera recargada")
+            elif elegido=="4":
+                estado=input("Cual es el estado de la cafetera: 'funcionando' o 'descompuesta': ")
+                cafetera.set_estado(estado.lower())
+                print("cafetera ",cafetera.get_nombre(),"esta ",estado)
+            elif elegido=="5":
+                cafeteria.quitar_cafetera_nombre(cafetera.get_nombre())
+                print("cafetera llena",cafetera.get_nombre(),"Borrada")
+            modificar_base_datos(cafetera)
+        except Exception as ex:
+            print(ex)
+    else:
+        print("Nombre de la cafetera incorrecto")
 
 def servir_cafe(cafeteria,lista_tipo):
     listar_tipo_cafe(cafeteria, lista_tipo)
     cafeteria_aux=Cafeteria("Auxiliar")
-    tipo=input("Que cafe desea tomar: ")
-    for index,x in enumerate(lista_tipo):
-        if tipo.lower()==x[1].lower():
-            break
-    lista_cafetera=cafeteria.get_lista_cafetera()
-    for x in lista_cafetera:
-        if x.get_tipo_de_cafe()== index+1 and x.get_estado():
-            cafeteria_aux.agregar_cafetera(x)
-    print("""
-        1 - Chico        100cc
-        2 - Medio        200cc
-        3 - Medio Grande 250cc
-        4 - Grande       300cc
-        """)
-    opc= {"1":100,
-        "2":200,
-        "3":250,
-        "4":300 }
-    tamaño=input("Ingrese número: ")
-    cuanto=int(input("Cuantas tazas:"))
-    while cuanto>0:
-        estado_cafetera(cafeteria_aux, lista_tipo)
-        usar=input("Ingrese el nombre de la cafetera que desea usar: ")
-        cafetera=cafeteria_aux.buscar_cafetera_por_nombre(usar)
-        taza=cafetera.cuantas_tazas(opc.get(tamaño))
-        if cuanto<=taza:
-            cafetera.servir(cuanto*opc.get(tamaño))
-            cuanto=0
-            print("Disfrute su cafe")
-        else:
-            print(cafetera.get_nombre()," solo puede servir ",taza," tazas")
-            cafetera.servir(cuanto*opc.get(tamaño))
-            cuanto=cuanto-taza
-            if len(cafeteria_aux.get_lista_cafetera())==1:
-                print("No hay mas de ese tipo de cafe")
-                cuanto=0
-        modificar_base_datos(cafetera)
+    print("Que cafe desea tomar 1 -",len(lista_tipo),": ",end="")
+    tipo=input()
+    tipo=controlar_numero(tipo)
+    if tipo:
+        lista_cafetera=cafeteria.get_lista_cafetera()
+        for x in lista_cafetera:
+            if x.get_tipo_de_cafe()== tipo and x.get_estado():
+                cafeteria_aux.agregar_cafetera(x)
+        print("""
+            1 - Chico        100cc
+            2 - Medio        200cc
+            3 - Medio Grande 250cc
+            4 - Grande       300cc
+            """)
+        opc= {"1":100,
+            "2":200,
+            "3":250,
+            "4":300 }
+        tamaño=input("Ingrese número: ")
+        cuanto=input("Cuantas tazas:")
+        cuanto=controlar_numero(cuanto)
+        if cuanto and tamaño in opc:
+            while cuanto>0 and len(cafeteria.get_lista_cafetera())>0:
+                estado_cafetera(cafeteria_aux, lista_tipo)
+                usar=input("Ingrese el nombre de la cafetera que desea usar: ")
+                cafetera=cafeteria_aux.buscar_cafetera_por_nombre(usar)
+                if cafetera:    
+                    taza=cafetera.cuantas_tazas(opc.get(tamaño))
+                    if cuanto<=taza:
+                        tenia=cafetera.get_contenido()
+                        cafetera.servir(cuanto*opc.get(tamaño))
+                        cuanto=0
+                        print(cafetera.get_nombre()," tenia ",tenia,"cc que con ",cafetera.get_contenido(),"cc")
+                        print("Disfrute su cafe")
+                    else:
+                        cafetera.servir(taza*opc.get(tamaño))
+                        cuanto=cuanto-taza
+                        print(cafetera.get_nombre()," solo puede servir ",taza," tazas")
+                        print("faltaron servir ",cuanto," tazas")
+                        if len(cafeteria_aux.get_lista_cafetera())==1:
+                            print("No hay mas de ese tipo de cafe")
+                            cuanto=0
+                    modificar_base_datos(cafetera)
  
 
 def estado_cafetera(cafeteria,lista_tipo):
@@ -197,8 +250,9 @@ def quitar_cafetera(cafeteria,lista_tipo):
     print("")
     print("Quitar cafetera".center(20, "-"))
     print("")
-    borrar=int(input("Que cafetera desea borrar ingrese numero: "))
-    if borrar <= cafeteria.get_cantidad_cafeteras():
+    borrar=input("Que cafetera desea borrar ingrese numero: ")
+    borrar=controlar_numero(borrar)
+    if borrar and borrar <= cafeteria.get_cantidad_cafeteras():
         cafetera_borrar=cafeteria.get_lista_cafetera()[borrar -1]
         if cafeteria.quitar_cafetera_nombre(cafetera_borrar.get_nombre()):
             print("Cafetera borrada")

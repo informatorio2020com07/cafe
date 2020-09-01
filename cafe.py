@@ -50,12 +50,20 @@ class Cafetera:
         return self.__funcionando
 
     def set_contenido(self,cantidad):
-            """cambia el contenido de capacidad"""
-            self.__cant=cantidad
+        """cambia el contenido de capacidad"""
+        self.__cant=cantidad
 
     def set_capacidad(self,capacidad):
-            """cambia el contenido de capacidad"""
-            self.__capacidad=capacidad        
+        """cambia el contenido de capacidad"""
+        self.__capacidad=capacidad        
+
+    def set_estado(self,estado):
+        """cambia el estado"""
+        if estado =="funcionando" or estado=="descompuesta":
+            self.__funcionando=estado
+        else:
+            raise ValueError("Ese no es un estado")
+
 
     def esta_llena(self):
         # Si el elemento cafetera esta llena cap=cant devuelve true, sino devuelve false
@@ -163,11 +171,11 @@ class Cafeteria:
         return:
             Un objeto cafetera
         """
+
         for item in self.get_lista_cafetera():
             if item.get_nombre().lower() == nombre.lower():
                 return item
         return False
-
 
     def agregar_cafetera(self, cafetera:Cafetera):
 
